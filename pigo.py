@@ -122,7 +122,6 @@ class Pigo(object):
         self.turn_track -= enc
         time.sleep(1*(enc/18)+.4)
 
-
     def encB(self, enc):
         """sets an encoder, moves back, sleeps, (18 = 1 wheel rot)"""
         print('Moving '+str((enc/18))+ ' rotations(s) backwards')
@@ -288,8 +287,8 @@ try:
     p = Pigo()
 except (KeyboardInterrupt, SystemExit):
     from gopigo import *
-    stop()
+    stop_now()
 except Exception as ee:
     from gopigo import *
-    stop()
+    stop_now()
     logging.error(ee.__str__())
