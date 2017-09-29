@@ -73,11 +73,11 @@ class Piggy(pigo.Pigo):
             self.encF(10)
 
     def back_it_up(self):
-        for x in range(3)
+        for x in range(3):
             self.encB(10)
             self.encR(5)
             self.encL(5)
-            
+
 
 
 
