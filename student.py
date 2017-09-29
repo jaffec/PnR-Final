@@ -89,7 +89,7 @@ class Piggy(pigo.Pigo):
     #def square(self):
      #   for x in range(3):
       #      self.encF(18)
-       #     self.encR(14)
+            self.encR(14)
         print("Now for some basic shapes")
 
 
