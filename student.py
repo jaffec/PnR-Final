@@ -60,7 +60,7 @@ class Piggy(pigo.Pigo):
         self.to_the_right()
         self.to_the_left()
         self.back_it_up()
-        self.make_a_square()
+        self.sqaure()
 
     def to_the_right(self):
         "subroutine of dance method"
@@ -80,9 +80,11 @@ class Piggy(pigo.Pigo):
             self.encL(5)
             self.encF(10)
             self.encB(10)
-    #def.make_a_square(self):
-     #   for x in range(3)
-      #      self.encF(5)
+    def.square(self):
+        for x in range(3):
+            self.encF(18)
+            self.encR(14)
+
 
 
 
