@@ -63,11 +63,13 @@ class Piggy(pigo.Pigo):
         #self.cha_cha()
         #self.walk_it_by_yourself()
 
-    def to_the_right(selfs):
+    def to_the_right(self):
         "subroutine of dance method"
         for x in range(3):
             self.encR(5)
             self.encf(10)
+            
+
     def nav(self):
         """auto pilots and attempts to maintain original heading"""
         logging.debug("Starting the nav method")
