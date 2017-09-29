@@ -80,7 +80,8 @@ class Piggy(pigo.Pigo):
             self.encL(5)
             self.encF(10)
             self.encB(10)
-    def.square(self):
+
+    def square(self):
         for x in range(3):
             self.encF(18)
             self.encR(14)
