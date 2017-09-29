@@ -61,17 +61,21 @@ class Piggy(pigo.Pigo):
         self.to_the_left()
         self.back_it_up()
         self.sqaure()
+        print("---- JUST HIT THE DANCE ----")
+
 
     def to_the_right(self):
         "subroutine of dance method"
         for x in range(3):
             self.encR(5)
             self.encF(10)
+        print("Went to the right")
 
     def to_the_left(self):
         for x in range(3):
             self.encL(7)
             self.encF(10)
+        print("and then left...")
 
     def back_it_up(self):
         for x in range(3):
@@ -80,11 +84,13 @@ class Piggy(pigo.Pigo):
             self.encL(5)
             self.encF(10)
             self.encB(10)
+        print("Bringing it back")
 
-    def square(self):
-        for x in range(3):
-            self.encF(18)
-            self.encR(14)
+    #def square(self):
+     #   for x in range(3):
+      #      self.encF(18)
+       #     self.encR(14)
+        print("Now for some basic shapes")
 
 
 
