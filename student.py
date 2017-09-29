@@ -69,7 +69,7 @@ class Piggy(pigo.Pigo):
         for x in range(3):
             self.encR(5)
             self.encF(10)
-        print("Went to the right")
+        print("--- Went to the right ---")
 
     def to_the_left(self):
         for x in range(3):
@@ -84,7 +84,7 @@ class Piggy(pigo.Pigo):
             self.encL(5)
             self.encF(10)
             self.encB(10)
-        print("Bringing it back")
+        print("--- Bringing it back ---")
 
     #def square(self):
      #   for x in range(3):
