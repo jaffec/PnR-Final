@@ -68,7 +68,11 @@ class Piggy(pigo.Pigo):
         for x in range(3):
             self.encR(5)
             self.encf(10)
-            
+
+    def to_the_left(self):
+        for x in range(3):
+            self.encL(5)
+
 
     def nav(self):
         """auto pilots and attempts to maintain original heading"""
