@@ -59,6 +59,7 @@ class Piggy(pigo.Pigo):
         ##### WRITE YOUR FIRST PROJECT HERE
         self.to_the_right()
         self.to_the_left()
+        self.back_it_up()
 
     def to_the_right(self):
         "subroutine of dance method"
@@ -69,7 +70,16 @@ class Piggy(pigo.Pigo):
     def to_the_left(self):
         for x in range(3):
             self.encL(7)
-            self.encB(5)
+            self.encF(10)
+
+    def back_it_up(self):
+        for x in range(3)
+            self.encB(10)
+            self.encR(5)
+            self.encL(5)
+            
+
+
 
 
     def nav(self):
