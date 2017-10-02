@@ -17,7 +17,7 @@ class Piggy(pigo.Pigo):
         """The robot's constructor: sets variables and runs menu loop"""
         print("I have been instantiated!")
         # Our servo turns the sensor. What angle of the servo( ) method sets it straight?
-        self.MIDPOINT = 90
+        self.MIDPOINT = 106
         # YOU DECIDE: How close can an object get (cm) before we have to stop?
         self.STOP_DIST = 30
         # YOU DECIDE: What left motor power helps straighten your fwd()?
@@ -85,7 +85,7 @@ class Piggy(pigo.Pigo):
             self.encF(10)
             self.encB(10)
         print("--- Bringing it back ---")
-
+####ADD SHAPES###
     #def square(self):
      #   for x in range(3):
       #      self.encF(18)
