@@ -90,9 +90,8 @@ class Piggy(pigo.Pigo):
 
     def yeet(self):
         for x in range(3):
-
-         self.servo(170)
-        self.servo(60)
+            self.servo(170)
+            self.servo(60)
 
         print("--- Bringing it back ---")
 ####ADD SHAPES###
