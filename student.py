@@ -75,6 +75,7 @@ class Piggy(pigo.Pigo):
         for x in range(3):
             self.encL(7)
             self.encF(10)
+            self.servo((90))
 
         print("and then left...")
 
@@ -85,10 +86,11 @@ class Piggy(pigo.Pigo):
             self.encL(5)
             self.encF(10)
             self.encB(10)
+            self.servo(180)
 
     def yeet_ya(self):
         for x in range(3):
-            self.servo(170)
+
         print("--- Bringing it back ---")
 ####ADD SHAPES###
     #def square(self):
