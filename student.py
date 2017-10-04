@@ -82,6 +82,8 @@ class Piggy(pigo.Pigo):
             if scan1 < self.SAFE_STOP_DIST:
                 print("Doesn't look clear to me")
                 return False
+            self.encR(8)
+            
         return True
 
         #loop 3 times
