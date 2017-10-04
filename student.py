@@ -80,7 +80,7 @@ class Piggy(pigo.Pigo):
 
     def is_clear(self):
         for x in range((self.MIDPOINT - 15), (self.MIDPOINT + 15), 5):
-            self.servo(x)
+            self.servo(10)
             scan1 = self.dist()
             # double check the distance
             scan2 = self.dist()
@@ -92,7 +92,7 @@ class Piggy(pigo.Pigo):
             self.scan[x] = scan1
             print("Degree: " + str(x) + ", distance: " + str(scan1))
             if scan1 < self.SAFE_STOP_DIST:
-                print("NOT SAFE)
+                print("NOT SAFE")
                 return False
         return True
 
