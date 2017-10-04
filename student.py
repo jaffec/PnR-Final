@@ -69,10 +69,6 @@ class Piggy(pigo.Pigo):
         print("Running the is_clear method.")
         for x in range((self.MIDPOINT - 15), (self.MIDPOINT + 15), 5):
             self.servo(x)
-            scan1 = self.dist()
-            # double check the distance
-            scan2 = self.dist()
-            # if I found a different distance the second time....
             if abs(scan1 - scan2) > 2:
                 scan3 = self.dist()
                 # take another scan and average the three together
@@ -82,8 +78,8 @@ class Piggy(pigo.Pigo):
             if scan1 < self.SAFE_STOP_DIST:
                 print("Doesn't look clear to me")
                 return False
-            self.encR(8)
-            
+
+
         return True
 
         #loop 3 times
