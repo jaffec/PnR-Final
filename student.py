@@ -58,7 +58,7 @@ class Piggy(pigo.Pigo):
         """executes a series of methods that add up to a compound dance"""
         print("\n---- LET'S DANCE ----\n")
         ##### WRITE YOUR FIRST PROJECT HERE
-        if self.safety_check():
+        if self.is_clear():
             self.to_the_right()
             self.to_the_left()
             self.back_it_up()
