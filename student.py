@@ -65,22 +65,10 @@ class Piggy(pigo.Pigo):
             print("---- ROBOTO IS HITTING THE DANCE FLOOR, MAKE ROOM ----")
 
     def safety_check(self):
-        self.servo(self.MIDPOINT)  #looks straight ahead
-        if self.dist() < self.SAFE_STOP_DIST:
-            return False
-        self.encR(9)
-        self.is_clear()
-
-            #for x in range (self.MIDPOINT - 15), (self.MIDPOINT + 15), 5):
-
-
-        #loop 3 times
-        #turn 90 degreees
-        #scan again
-
-    def is_clear(self):
+        """does a 3-point scan around the midpoint, returns false if a test fails"""
+        print("Running the is_clear method.")
         for x in range((self.MIDPOINT - 15), (self.MIDPOINT + 15), 5):
-            self.servo(10)
+            self.servo(x)
             scan1 = self.dist()
             # double check the distance
             scan2 = self.dist()
@@ -92,9 +80,13 @@ class Piggy(pigo.Pigo):
             self.scan[x] = scan1
             print("Degree: " + str(x) + ", distance: " + str(scan1))
             if scan1 < self.SAFE_STOP_DIST:
-                print("NOT SAFE")
+                print("Doesn't look clear to me")
                 return False
         return True
+
+        #loop 3 times
+        #turn 90 degreees
+        #scan again
 
 
 
