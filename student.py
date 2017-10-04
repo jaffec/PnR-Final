@@ -60,7 +60,6 @@ class Piggy(pigo.Pigo):
         self.to_the_right()
         self.to_the_left()
         self.back_it_up()
-        self.sqaure()
         print("---- JUST HIT THE DANCE ----")
 
 
@@ -75,18 +74,18 @@ class Piggy(pigo.Pigo):
         for x in range(3):
             self.encL(7)
             self.encF(10)
-            self.servo((90))
+
 
         print("and then left...")
 
     def back_it_up(self):
         for x in range(3):
             self.encB(10)
-            self.encR(5)
-            self.encL(5)
-            self.encF(10)
-            self.encB(10)
-            self.servo(180)
+            self.encR(7)
+            self.encL(7)
+            self.encF(11)
+            self.encB(11)
+
 
         print("--- Bringing it back ---")
 ####ADD SHAPES###
