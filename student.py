@@ -19,7 +19,8 @@ class Piggy(pigo.Pigo):
         # Our servo turns the sensor. What angle of the servo( ) method sets it straight?
         self.MIDPOINT = 106
         # YOU DECIDE: How close can an object get (cm) before we have to stop?
-        self.STOP_DIST = 30
+        self.SAFE_STOP_DIST = 30
+        self.HARD_STOP_DIST = 15
         # YOU DECIDE: What left motor power helps straighten your fwd()?
         self.LEFT_SPEED = 136
         # YOU DECIDE: What left motor power helps straighten your fwd()?
@@ -57,10 +58,44 @@ class Piggy(pigo.Pigo):
         """executes a series of methods that add up to a compound dance"""
         print("\n---- LET'S DANCE ----\n")
         ##### WRITE YOUR FIRST PROJECT HERE
-        self.to_the_right()
-        self.to_the_left()
-        self.back_it_up()
-        print("---- JUST HIT THE DANCE ----")
+        if self.safety_check():
+            self.to_the_right()
+            self.to_the_left()
+            self.back_it_up()
+            print("---- ROBOTO IS HITTING THE DANCE FLOOR, MAKE ROOM ----")
+
+    def safety_check(self):
+        self.servo(self.MIDPOINT)  #looks straight ahead
+        if self.dist() < self.SAFE_STOP_DIST:
+            return False
+        self.encR(9)
+        self.is_clear()
+
+            #for x in range (self.MIDPOINT - 15), (self.MIDPOINT + 15), 5):
+
+
+        #loop 3 times
+        #turn 90 degreees
+        #scan again
+
+    def is_clear(self):
+        for x in range((self.MIDPOINT - 15), (self.MIDPOINT + 15), 5):
+            self.servo(x)
+            scan1 = self.dist()
+            # double check the distance
+            scan2 = self.dist()
+            # if I found a different distance the second time....
+            if abs(scan1 - scan2) > 2:
+                scan3 = self.dist()
+                # take another scan and average the three together
+                scan1 = (scan1 + scan2 + scan3) / 3
+            self.scan[x] = scan1
+            print("Degree: " + str(x) + ", distance: " + str(scan1))
+            if scan1 < self.SAFE_STOP_DIST:
+                print("NOT SAFE)
+                return False
+        return True
+
 
 
     def to_the_right(self):
@@ -74,8 +109,6 @@ class Piggy(pigo.Pigo):
         for x in range(3):
             self.encL(7)
             self.encF(10)
-
-
         print("and then left...")
 
     def back_it_up(self):
