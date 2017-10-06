@@ -81,6 +81,7 @@ class Piggy(pigo.Pigo):
     def to_the_right(self):
         "subroutine of dance method"
         for x in range(3):
+            self.servo(40)
             self.encR(5)
             self.encF(10)
             self.servo(40)
@@ -88,6 +89,7 @@ class Piggy(pigo.Pigo):
 
     def to_the_left(self):
         for x in range(3):
+            self.servo(40)
             self.encL(7)
             self.encF(10)
         print("and then left...")
