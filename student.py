@@ -62,6 +62,7 @@ class Piggy(pigo.Pigo):
             self.to_the_right()
             self.to_the_left()
             self.back_it_up()
+            self.return_to_sender()
             print("---- ROBOTO IS HITTING THE DANCE FLOOR, MAKE ROOM ----")
 
     def safety_check(self): #Runs check looks around 360 degrees before moving
