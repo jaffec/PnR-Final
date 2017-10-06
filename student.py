@@ -64,7 +64,7 @@ class Piggy(pigo.Pigo):
             self.back_it_up()
             print("---- ROBOTO IS HITTING THE DANCE FLOOR, MAKE ROOM ----")
 
-    def safety_check(self):
+    def safety_check(self): #Runs check looks around 360 degrees before moving
         self.servo(self.MIDPOINT)  # Looks straight ahead
         for x in range(4):
             if not self.is_clear():
@@ -75,9 +75,6 @@ class Piggy(pigo.Pigo):
         return True
 
 
-        #loop 3 times
-        #turn 90 degreees
-        #scan again
 
 
 
@@ -86,6 +83,7 @@ class Piggy(pigo.Pigo):
         for x in range(3):
             self.encR(5)
             self.encF(10)
+            self.servo(40)
         print("--- Went to the right ---")
 
     def to_the_left(self):
@@ -104,7 +102,7 @@ class Piggy(pigo.Pigo):
 
 
         print("--- Bringing it back ---")
-####ADD SHAPES###
+####Will add shape on final project###
     #def square(self):
      #   for x in range(3):
       #      self.encF(18)
