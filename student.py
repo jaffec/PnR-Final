@@ -97,7 +97,7 @@ class Piggy(pigo.Pigo):
 
     def back_it_up(self):
         for x in range(3):
-            self.servo(60)
+            self.servo(150)
             self.encB(10)
             self.encR(7)
             self.encL(7)
@@ -105,6 +105,8 @@ class Piggy(pigo.Pigo):
             self.encB(11)
     def return_to_sender(self):
         for x in range(1):
+            self.servo(50)
+            self.servo(150)
             self.encR(5)
             self.encF(7)
         print("ad unknown, return to sender")
