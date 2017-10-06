@@ -96,11 +96,16 @@ class Piggy(pigo.Pigo):
 
     def back_it_up(self):
         for x in range(3):
+            self.servo(60)
             self.encB(10)
             self.encR(7)
             self.encL(7)
             self.encF(11)
             self.encB(11)
+    def return_to_sender(self):
+        for x in range(1):
+            self.encR(5)
+            self.encF(7)
 
 
         print("--- Bringing it back ---")
