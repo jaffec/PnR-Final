@@ -97,7 +97,7 @@ class Piggy(pigo.Pigo):
 
     def back_it_up(self):
         for x in range(3):
-            self.servo(150)
+            self.servo(150) 
             self.encB(10)
             self.encR(7)
             self.encL(7)
@@ -133,11 +133,19 @@ class Piggy(pigo.Pigo):
         print("-----------! NAVIGATION ACTIVATED !------------\n")
         print("-------- [ Press CTRL + C to stop me ] --------\n")
         print("-----------! NAVIGATION ACTIVATED !------------\n")
+        while True:
+            if self.is_clear():
+                self.cruise()
+            else:
+                self.encR(10)
+    def cruise(self):
+        """ drive straight while path is clear """
+        self.fwd()
+        while self.dist() > self.SAFE_STOP_DIST:
+            time.sleep(.5)
 
 
-####################################################
-############### STATIC FUNCTIONS
-
+    def error():
 def error():
     """records general, less specific error"""
     logging.error("ERROR")
