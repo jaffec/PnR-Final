@@ -75,10 +75,6 @@ class Piggy(pigo.Pigo):
         print("Safe to dance!")
         return True
 
-
-
-
-
     def to_the_right(self):
         "subroutine of dance method"
         for x in range(3):
@@ -110,22 +106,13 @@ class Piggy(pigo.Pigo):
             self.encR(5)
             self.encF(7)
         print("ad unknown, return to sender")
-
-
         print("--- Bringing it back ---")
-####Will add shape on final project###
-    #def square(self):
-     #   for x in range(3):
-      #      self.encF(18)
-       #     self.encR(14)
+        ####Will add shape on final project###
+        #def square(self):
+        #   for x in range(3):
+        #      self.encF(18)
+        #     self.encR(14)
         print("Now for some basic shapes")
-
-
-
-
-
-
-
 
     def nav(self):
         """auto pilots and attempts to maintain original heading"""
@@ -143,7 +130,6 @@ class Piggy(pigo.Pigo):
         self.fwd()
         while self.dist() > self.SAFE_STOP_DIST:
             time.sleep(.5)
-
 
 
 def error():

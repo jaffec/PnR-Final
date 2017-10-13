@@ -301,4 +301,4 @@ except (KeyboardInterrupt, SystemExit):
     stop_now()
 except Exception as ee:
     stop_now()
-    logging.error(ee.__str__())ging.error(ee.__str__())
+    logging.error(ee.__str__())
