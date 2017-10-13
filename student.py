@@ -145,7 +145,7 @@ class Piggy(pigo.Pigo):
             time.sleep(.5)
 
 
-    def error():
+
 def error():
     """records general, less specific error"""
     logging.error("ERROR")
