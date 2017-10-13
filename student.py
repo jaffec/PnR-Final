@@ -124,8 +124,13 @@ class Piggy(pigo.Pigo):
             if self.is_clear():
                 self.cruise()
             else:
-                self.encR(10)
-                self.encL(10)
+                while not:
+                    self.encR(10)
+                while not:
+                    self.encL(10)
+                if True
+                    self.cruise()
+
 
     def cruise(self):
         """ drive straight while path is clear """
