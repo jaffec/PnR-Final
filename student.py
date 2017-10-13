@@ -97,7 +97,7 @@ class Piggy(pigo.Pigo):
 
     def back_it_up(self):
         for x in range(3):
-            self.servo(150) 
+            self.servo(150)
             self.encB(10)
             self.encR(7)
             self.encL(7)
