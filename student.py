@@ -55,19 +55,19 @@ class Piggy(pigo.Pigo):
 
 
     # YOU DECIDE: How does your GoPiggy dance?
-    def obstacle_count(self):
-        """scans and estimates the number of obstacles within sight"""
-        self.wide_scan()
-        found_something = False
-
-        counter = 0
-        for distance in self.scan:
-            if distance and distance < 80 and not found_something:
-                counter += 1
-                found_something = True
-                print("Object # %d found, I think" % counter)
-            if distance and distance > 80 and found_something:
-                found_something = False
+        def obstacle_count(self):
+            """scans and estimates the number of obstacles within sight"""
+            self.wide_scan()
+            found_something = False
+            counter = 0
+            for distance in self.scan:
+                if distance and distance < 200 and not found_something:
+                    found_something = True
+                    counter += 1
+                    print("Object # %d found, I think" % counter)
+                if distance and distance > 200 and found_something:
+                    found_something = False
+            print("\n----I SEE %d OBJECTS----\n" % counter)
 
         print("\n----I SEE %d OBJECTS----\n" % counter)
 
