@@ -149,13 +149,13 @@ class Piggy(pigo.Pigo):
         while self.dist() > self.SAFE_STOP_DIST:
             time.sleep(.5)
 
-    def error(self):
+def error():
     """records general, less specific error"""
     logging.error("ERROR")
     print('ERROR')
 
 
-    def quit_now():
+def quit_now():
     """shuts down app"""
     raise SystemExit
 
