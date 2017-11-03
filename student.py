@@ -135,7 +135,7 @@ class Piggy(pigo.Pigo):
         self.encL(15)
         self.encR(10)
         self.encR(10)
-        self.encL(7)`
+        self.encL(7)
         self.restore()
 
     def nav(self):
