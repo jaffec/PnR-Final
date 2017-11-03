@@ -167,6 +167,7 @@ class Piggy(pigo.Pigo):
             if self.volt() > 10.3:
                 self.stop()
                 print("\n power flux must stop \n")
+                ##
 
 def error():
     """records general, less specific error"""
