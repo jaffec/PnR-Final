@@ -42,6 +42,7 @@ class Piggy(pigo.Pigo):
         menu = {"n": ("Navigate forward", self.nav),
                 "d": ("Dance", self.dance),
                 "c": ("Calibrate", self.calibrate),
+                "t": ("test restore", self.calibrate),
                 "s": ("Check status", self.status),
                 "q": ("Quit", quit_now)
                 }
@@ -118,6 +119,24 @@ class Piggy(pigo.Pigo):
         #      self.encF(18)
         #     self.encR(14)
         print("Now for some basic shapes")
+
+    def restore(self):
+        """
+        Uses self.turn_track to reorient to original heading
+        """
+        print("Restoring Direction")
+        if self.turn_track > 0:
+            self.encL(abs(self.turn_track))
+        elif self.turn_track < 0:
+            self.encR(abs(self.turn_track))
+
+    def test_restore_heading(self):
+        self.encR(5)
+        self.encL(15)
+        self.encR(10)
+        self.encR(10)
+        self.encL(7)
+        self.restore()
 
     def nav(self):
         """auto pilots and attempts to maintain original heading"""
