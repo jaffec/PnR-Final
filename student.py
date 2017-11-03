@@ -163,6 +163,7 @@ class Piggy(pigo.Pigo):
         self.fwd()
         while self.dist() > self.SAFE_STOP_DIST:
             time.sleep(.5)
+            self.status()
 
 def error():
     """records general, less specific error"""
