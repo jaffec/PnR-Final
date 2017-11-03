@@ -274,6 +274,9 @@ class Pigo(object):
                 else:
                     break
 
+    def volt(self):
+        return volt()
+
     def status(self):
         """prints the voltage, motor power, midpoint and stop dist"""
         print("My power is at "+ str(volt()) + " volts")
@@ -290,6 +293,8 @@ def stop_now():
     except Exception as err:
         print(err)
         print("\nCOULDN'T AUTO-STOP!!\n!!!! CUT POWER !!!!!")
+
+
 
 ########################
 #### MAIN APP
