@@ -164,7 +164,7 @@ class Piggy(pigo.Pigo):
         while self.dist() > self.SAFE_STOP_DIST:
             time.sleep(.5)
             self.status()
-            if self.volt() > :
+            if self.volt() > 15:
                 self.stop()
                 print("\n power flux must stop \n")
                 ##
