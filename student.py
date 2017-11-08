@@ -148,10 +148,10 @@ class Piggy(pigo.Pigo):
             if self.is_clear():
                 self.cruise()
             else:
-                self.encR(6)
+                self.encR(7)
                 if self.is_clear():
                     continue
-                self.encL(8)
+                self.encL(9)
                 if self.is_clear():
                     continue
                 self.encB(10)
