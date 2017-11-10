@@ -148,9 +148,9 @@ class Piggy(pigo.Pigo):
         print("-----------! NAVIGATION ACTIVATED !------------\n")
         print("-------- [ Press CTRL + C to stop me ] --------\n")
         print("-----------! NAVIGATION ACTIVATED !------------\n")
-        rightnow = datetime.datetime.utcnow()
+        right_now = datetime.datetime.utcnow()
         difference = (right_now - self.start_time).seconds
-        print ("It took you %d seconds to run this" % rightnow - self.start_time)
+        print ("It took you %d seconds to run this" % right_now - self.start_time)
 
         while True:
             if self.is_clear():
