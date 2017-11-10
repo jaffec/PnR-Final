@@ -173,9 +173,8 @@ class Piggy(pigo.Pigo):
         while true:
             if self.dist() > 100:
                 self.stop()
-            elif datetime.datetime.utcnow() - start > datetime.timedelta(seconds=10)
+            elif datetime.datetime.utcnow() - start > datetime.timedelta(seconds=10):
                 self.stop()
-                    print()
             time.sleep(.2)
 
 
