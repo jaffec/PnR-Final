@@ -174,7 +174,7 @@ class Piggy(pigo.Pigo):
             if self.dist() > 100:
                 self.stop()
                     print("I think ive found a good path")
-            elif datetime.datetime.utcnow() - start > datetime.timedelta(seconds = 10)
+            elif datetime.datetime.utcnow() - start > datetime.timedelta(seconds=10)
                 self.stop()
                     print()
             time.sleep(.2)
