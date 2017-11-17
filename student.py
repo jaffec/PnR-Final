@@ -167,11 +167,11 @@ class Piggy(pigo.Pigo):
             if self.is_clear():
                 self.cruise()
             else:
-                self.switch_turn(8)
+                self.switch_turn(5)
                 if self.is_clear():
                     continue
                     self.restore()
-                self.switch_turn(9)
+                self.switch_turn(5)
                 if self.is_clear():
                     continue
                 self.encB(10)
