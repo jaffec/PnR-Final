@@ -168,15 +168,14 @@ class Piggy(pigo.Pigo):
                 self.cruise()
             else:
                 self.switch_turn(5)
-                if self.is_clear():
-                    continue
+                if not self.is_clear():
+                    self.switch_turn(10)
+                if not self.is_clear()
                     self.restore()
-                self.switch_turn(5)
-                if self.is_clear():
-                    continue
                 self.encB(10)
-                self.restore()
-                    #check right and go right if clear
+
+
+                  #check right and go right if clear
 
                     #look left 2 times and then go
     def smooth_turn(self):
