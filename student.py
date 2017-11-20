@@ -171,8 +171,9 @@ class Piggy(pigo.Pigo):
                 if not self.is_clear():
                     self.switch_turn(10)
                 if not self.is_clear()
+                    self.encB(10)
                     self.restore()
-                self.encB(10)
+
 
 
                   #check right and go right if clear
