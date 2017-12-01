@@ -5,227 +5,305 @@ import time
 import logging
 
 
-import pigo
-import time  # import just in case students need
-import datetime
-import random
-
-# setup logs
-import logging
-LOG_LEVEL = logging.INFO
-LOG_FILE = "/home/pi/PnR-Final/log_robot.log"  # don't forget to make this file!
-LOG_FORMAT = "%(asctime)s %(levelname)s %(message)s"
-logging.basicConfig(filename=LOG_FILE, format=LOG_FORMAT, level=LOG_LEVEL)
-
-
-class Piggy(pigo.Pigo):
-    """Student project, inherits teacher Pigo class which wraps all RPi specific functions"""
+class Pigo(object):
+    """GoPiGo parent class... students make their own that inherit this"""
 
     def __init__(self):
-        """The robot's constructor: sets variables and runs menu loop"""
-        print("I have been instantiated!")
-        self.start_time = datetime.datetime.utcnow()
-
-        self.next_right = True
-
-        # Our servo turns the sensor. What angle of the servo( ) method sets it straight?
-        self.MIDPOINT = 106
-        # YOU DECIDE: How close can an object get (cm) before we have to stop?
-        self.SAFE_STOP_DIST = 20
-        self.HARD_STOP_DIST = 30
-        # YOU DECIDE: What left motor power helps straighten your fwd()?
-        self.LEFT_SPEED = 146
-        # YOU DECIDE: What left motor power helps straighten your fwd()?
-        self.RIGHT_SPEED = 148
-        # This one isn't capitalized because it changes during runtime, the others don't
+        """establishes midpoint, standard stop distance and motor speed then opens menu"""
+        self.MIDPOINT = 90
+        self.HARD_STOP_DIST = 10
+        self.SAFE_STOP_DIST = 30
+        self.RIGHT_SPEED = 200
+        self.LEFT_SPEED = 200
         self.turn_track = 0
-        # Our scan list! The index will be the degree and it will store distance
         self.scan = [None] * 180
-        self.set_speed(self.LEFT_SPEED, self.RIGHT_SPEED)
-        # let's use an event-driven model, make a handler of sorts to listen for "events"
-        while True:
-            self.stop()
-            self.menu()
 
-    def switch_turn(self,enc):
-        if self.next_right:
-            self.encR(enc)
-        else:
-            self.encL(enc)
-        self.next_right = not self.next_right
+        if __name__ == "__main__":  # this makes sure the parent handler doesn't take over student's
+            print('-----------------------')
+            print('------- PARENT --------')
+            print('-----------------------')
 
+            self.set_speed(self.LEFT_SPEED, self.RIGHT_SPEED)
+            while True:
+                self.stop()
+                self.menu()
 
-
+    ####
+    ###############################################
+    #### FUNCTIONS INTENDED TO BE REPLACED IN CHILD
 
     def menu(self):
-        """Displays menu dictionary, takes key-input and calls method"""
-        ## This is a DICTIONARY, it's a list with custom index values
-        # You may change the menu if you'd like to add an experimental method
+        """gives options to users, calls requested method"""
         menu = {"n": ("Navigate forward", self.nav),
                 "d": ("Dance", self.dance),
                 "c": ("Calibrate", self.calibrate),
-                "t": ("test restore", self.calibrate),
-                "s": ("Check status", self.status),
-                "q": ("Quit", quit_now)
+                "o": ("Open House Demo", self.open_house),
+                "q": ("Quit", quit)
                 }
-        # loop and print the menu...
-        for key in sorted(menu.keys()):
+        for key in sorted(menu.keys()): # Mr. A, did you copy this from StackOverflow? Yes.
             print(key + ":" + menu[key][0])
-        # store the user's answer
+
         ans = raw_input("Your selection: ")
-        # activate the item selected
         menu.get(ans, [None, error])[1]()
 
+    def open_house(self):
+        """Cute demo used for open house"""
+        choice = raw_input("1) Shy;  2) Spin.. ")
+        if choice == "1":
+            while True:
+                if not self.is_clear():
+                    self.beShy()
+        else:
+            while True:
+                if not self.is_clear():
+                    for x in range(5):
+                        self.encR(2)
+                        self.encL(2)
+                    self.encR(15)
 
-    # YOU DECIDE: How does your GoPiggy dance?
-
-    def obstacle_count(self):
-        """scans and estimates the number of obstacles within sight"""
-        self.wide_scan()
-        found_something = False
-        counter = 0
-        for distance in self.scan:
-            if distance and distance < 200 and not found_something:
-                found_something = True
-                counter += 1
-                print("Object # %d found, I think" % counter)
-            if distance and distance > 200 and found_something:
-                found_something = False
-        print("\n----I SEE %d OBJECTS----\n" % counter)
-
-    def safety_check(self): #Runs check looks around 360 degrees before moving
-        self.servo(self.MIDPOINT)  # Looks straight ahead
-        for x in range(4):
-            if not self.is_clear():
-                return False
-            print("Check Distance")
-            self.encR(8)
-        print("Safe to dance!")
-        return True
-
-    def to_the_right(self):
-        "subroutine of dance method"
+    def beShy(self):
+        """animates a shy withdrawal"""
+        self.set_speed(80, 80)
+        self.encB(5)
         for x in range(3):
-            self.servo(40)
-            self.encR(5)
-            self.encF(10)
-            self.servo(40)
-        print("--- Went to the right ---")
-
-    def to_the_left(self):
-        for x in range(3):
-            self.servo(40)
-            self.encL(7)
-            self.encF(10)
-        print("and then left...")
-
-    def back_it_up(self):
-        for x in range(3):
-            self.servo(150)
-            self.encB(10)
-            self.encR(7)
-            self.encL(7)
-            self.encF(11)
-            self.encB(11)
-    def return_to_sender(self):
-        for x in range(1):
-            self.servo(50)
-            self.servo(150)
-            self.encR(5)
-            self.encF(7)
-        print("ad unknown, return to sender")
-        print("--- Bringing it back ---")
-        ####Will add shape on final project###
-        #def square(self):
-        #   for x in range(3):
-        #      self.encF(18)
-        #     self.encR(14)
-        print("Now for some basic shapes")
-
-    def restore(self):
-        """
-        Uses self.turn_track to reorient to original heading
-        """
-        print("Restoring Direction")
-        if self.turn_track > 0:
-            self.encL(abs(self.turn_track))
-        elif self.turn_track < 0:
-            self.encR(abs(self.turn_track))
-
-    def test_restore_heading(self):
-        self.encR(5)
-        self.encL(15)
-        self.encR(10)
-        self.encR(10)
-        self.encL(7)
-        self.restore()
+            servo(20)
+            time.sleep(.1)
+            servo(120)
+            time.sleep(.1)
+        self.encL(2)
+        self.encR(2)
+        self.encF(5)
 
     def nav(self):
-        """auto pilots and attempts to maintain original heading"""
-        logging.debug("Starting the nav method")
-        print("-----------! NAVIGATION ACTIVATED !------------\n")
-        print("-------- [ Press CTRL + C to stop me ] --------\n")
-        print("-----------! NAVIGATION ACTIVATED !------------\n")
-        right_now = datetime.datetime.utcnow()
-        difference = (right_now - self.start_time).seconds
-        print ("It took you %d seconds to run this" % difference)
+        """auto-pilots, tries to maintain direction while avoid obstacles"""
+        print("Parent nav")
 
-        while True:
-            if self.is_clear():
-                self.cruise()
-            else:
-                self.switch_turn(5)
-                if not self.is_clear():
-                    self.switch_turn(9)
-                if not self.is_clear():
-                    self.encB(5)
-                    self.restore()
+    # DANCING IS FOR THE CHILD CLASS
+    def dance(self):
+        """runs a series of methods each animating a dance move"""
+        print('Parent dance is lame.')
 
+    ##############################################
+    ##### FUNCTIONS NOT INTENDED TO BE OVERWRITTEN
+    def set_speed(self, left, right):
+        """takes left and right speed 0-255"""
+        set_left_speed(left)
+        set_right_speed(right)
+        print('Left speed set to: '+str(left)+' // Right set to: '+str(right))
 
+    def left(self):
+        """shell command for GoPiGo left"""
+        left()
 
-                  #check right and go right if clear
+    def right(self):
+        """shell command for GoPiGo right"""
+        right()
 
-                    #look left 2 times and then go
-    def smooth_turn(self):
-        self.right_rot()
-        start - datetime.datetime.utcnow()
+    def fwd(self):
+        """shell command for GoPiGo fwd"""
+        fwd()
+
+    def right_rot(self):
+        """encoder free turn"""
+        right_rot()
+
+    def left_rot(self):
+        """encoder-free turn"""
+        left_rot()
+
+    def encF(self, enc, m1=1, m2=1):
+        """sets encoder, moves forward, sleeps (18 = 1 wheel rot)"""
+        print('Moving '+str((enc/18))+' rotation(s) forward')
+        enc_tgt(m1, m2, enc)
+        fwd()
+        time.sleep(1 * (enc / 18)+.4)
+
+    def encR(self, enc, m1=1, m2=1):
+        """sets encoder, right_rot, += turn_track, (18 = 1 wheel rot)"""
+        print('Moving '+str((enc/18))+' rotation(s) right')
+        enc_tgt(m1, m2, enc)
+        right_rot()
+        self.turn_track += enc
+        time.sleep(1 * (enc / 18)+.4)
+
+    def encL(self, enc, m1=1, m2=1):
+        """sets encoder, right_rot, -= turn_track, (18 = 1 wheel rot)"""
+        print('Moving '+str((enc/18))+' rotation(s) left')
+        enc_tgt(m1, m2, enc)
+        left_rot()
+        self.turn_track -= enc
+        time.sleep(1*(enc/18)+.4)
+
+    def encB(self, enc, m1=1, m2=1):
+        """sets an encoder, moves back, sleeps, (18 = 1 wheel rot)"""
+        print('Moving '+str((enc/18))+ ' rotations(s) backwards')
+        enc_tgt(m1, m2, enc)
+        bwd()
+        time.sleep(1 * (enc / 18)+.4)
+
+    def servo(self, val):
+        """moves the head of the robot to the given degree within 60 from midpoint"""
+        if val > self.MIDPOINT-60 and val < self.MIDPOINT+60:
+            print('Moving servo to ' + str(val) + 'deg')
+            servo(val)
+            time.sleep(.1)
+        else:
+            print('range outside of %d - %d' % (self.MIDPOINT-60, self.MIDPOINT+60))
+
+    def dist(self):
+        """takes a measurement from the ultrasonic sensor, prints and returns dist in cm"""
+        measurement = us_dist(15)
+        if measurement < self.HARD_STOP_DIST:
+            print('hard stop triggered during dist')
+            self.stop()
+        time.sleep(.05)
+        print('I see something ' + str(measurement) + "cm away")
+        return measurement
+
+    def flush_scan(self):
+        """resets the scan array"""
+        self.scan = [None]*180
+
+    def wide_scan(self, count=2):
+        """moves servo 120 degrees and fills scan array, default count=2"""
+        self.flush_scan()
+        for x in range(self.MIDPOINT-60, self.MIDPOINT+60, count):
+            servo(x)
+            time.sleep(.1)
+            scan1 = us_dist(15)
+            time.sleep(.1)
+            #double check the distance
+            scan2 = us_dist(15)
+            #if I found a different distance the second time....
+            if abs(scan1 - scan2) > 2:
+                scan3 = us_dist(15)
+                time.sleep(.1)
+                #take another scan and average the three together
+                scan1 = (scan1+scan2+scan3)/3
+            self.scan[x] = scan1
+            print("Degree: "+str(x)+", distance: "+str(scan1))
+            time.sleep(.01)
+
+    def is_clear(self):
+        """does a 3-point scan around the midpoint, returns false if a test fails"""
+        print("Running the is_clear method.")
+        for x in range((self.MIDPOINT - 15), (self.MIDPOINT + 15), 5):
+            self.servo(x)
+            scan1 = self.dist()
+            # double check the distance
+            scan2 = self.dist()
+            # if I found a different distance the second time....
+            if abs(scan1 - scan2) > 2:
+                scan3 = self.dist()
+                # take another scan and average the three together
+                scan1 = (scan1 + scan2 + scan3) / 3
+            self.scan[x] = scan1
+            print("Degree: " + str(x) + ", distance: " + str(scan1))
+            if scan1 < self.SAFE_STOP_DIST:
+                print("Doesn't look clear to me")
+                return False
+        return True
+
+    def choose_path(self):
+        """averages distance on either side of midpoint and turns"""
+        print('Considering options...')
+        if self.is_clear():
+            return "fwd"
+        else:
+            self.wide_scan()
+        avgRight = 0
+        avgLeft = 0
+        for x in range(self.MIDPOINT-60, self.MIDPOINT):
+            if self.scan[x]:
+                avgRight += self.scan[x]
+        avgRight /= 60
+        print('The average dist on the right is '+str(avgRight)+'cm')
+        logging.info('The average dist on the right is ' + str(avgRight) + 'cm')
+        for x in range(self.MIDPOINT, self.MIDPOINT+60):
+            if self.scan[x]:
+                avgLeft += self.scan[x]
+        avgLeft /= 60
+        print('The average dist on the left is ' + str(avgLeft) + 'cm')
+        logging.info('The average dist on the left is ' + str(avgLeft) + 'cm')
+        if avgRight > avgLeft:
+            return "right"
+        else:
+            return "left"
+
+    def stop(self):
+        """spams stop command and moves servo to midpoint"""
+        print('All stop.')
+        for x in range(3):
+            stop()
         self.servo(self.MIDPOINT)
-        while true:
-            if self.dist() > 100:
-                self.stop()
-            elif datetime.datetime.utcnow() - start > datetime.timedelta(seconds=10):
-                self.stop()
-            time.sleep(.2)
+        logging.info("STOP COMMAND RECEIVED")
+
+    def calibrate(self):
+        """allows user to experiment on finding centered midpoint and even motor speeds"""
+        print("Calibrating...")
+        self.servo(self.MIDPOINT)
+        response = raw_input("Am I looking straight ahead? (y/n): ")
+        if response == 'n':
+            while True:
+                response = raw_input("Turn right, left, or am I done? (r/l/d): ")
+                if response == "r":
+                    self.MIDPOINT += 1
+                    print("Midpoint: " + str(self.MIDPOINT))
+                    self.servo(self.MIDPOINT)
+                elif response == "l":
+                    self.MIDPOINT -= 1
+                    print("Midpoint: " + str(self.MIDPOINT))
+                    self.servo(self.MIDPOINT)
+                else:
+                    print("Midpoint now saved to: " + str(self.MIDPOINT))
+                    break
+        else:
+            print('Okay, remember %d as the correct self.MIDPOINT' % self.MIDPOINT)
+        response = raw_input("Do you want to check if I'm driving straight? (y/n)")
+        if 'y' in response:
+            while True:
+                self.set_speed(self.LEFT_SPEED, self.RIGHT_SPEED)
+                self.encF(18)
+                response = raw_input("Reduce left, reduce right or drive? (l/r/d): ")
+                if response == 'l':
+                    self.LEFT_SPEED -= 10
+                elif response == 'r':
+                    self.RIGHT_SPEED -= 10
+                elif response == 'd':
+                    self.encF(18)
+                else:
+                    break
+
+    def volt(self):
+        return volt()
+
+    def status(self):
+        """prints the voltage, motor power, midpoint and stop dist"""
+        print("My power is at "+ str(volt()) + " volts")
+        print('Left speed set to: '+str(self.LEFT_SPEED)+' // Right set to: '+str(self.RIGHT_SPEED))
+        print('My MIDPOINT is set to: '+ str(self.MIDPOINT))
+        print('My safe stop distance is ' + str(self.SAFE_STOP_DIST) + 'cm')
+        print('My hard stop distance is ' + str(self.HARD_STOP_DIST) + 'cm')
 
 
-    def cruise(self): #wish i could use servo while driving
-        """ drive straight while path is clear """
-        self.fwd()
-        while self.dist() > self.SAFE_STOP_DIST:
-            time.sleep(.5)
-            self.status()
-            if self.volt() > 15:
-                self.stop()
-                print("\n power flux must stop \n")
-                ##
-
-def error():
-    """records general, less specific error"""
-    logging.error("ERROR")
-    print('ERROR')
+def stop_now():
+    try:
+        from gopigo import *
+        stop()
+    except Exception as err:
+        print(err)
+        print("\nCOULDN'T AUTO-STOP!!\n!!!! CUT POWER !!!!!")
 
 
-def quit_now():
-    """shuts down app"""
-    raise SystemExit
 
-##################################################################
-######## The app starts right here when we instantiate our GoPiggy
+########################
+#### MAIN APP
 
 
 try:
-    g = Piggy()
+    p = Pigo()
 except (KeyboardInterrupt, SystemExit):
-    pigo.stop_now()
+    stop_now()
 except Exception as ee:
+    stop_now()
     logging.error(ee.__str__())
