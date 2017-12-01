@@ -195,12 +195,12 @@ class Piggy(pigo.Pigo):
         """ drive straight while path is clear """
         self.fwd()
         while self.dist() > self.SAFE_STOP_DIST:
-            time.sleep(.5)
-            self.status()
-            if self.volt() > 15:
-                self.stop()
-                print("\n power flux must stop \n")
-                ##
+            time.sleep(.05)
+        self.stop()
+
+
+
+
 
 def error():
     """records general, less specific error"""
