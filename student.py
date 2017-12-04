@@ -195,10 +195,10 @@ class Piggy(pigo.Pigo):
     def cruise(self):
         """ drive straight while path is clear """
         self.fwd()
-        while self.is_clear():
-        while self.dist() > self.SAFE_STOP_DIST:
-            time.sleep(.2)
-            self.status()
+            while self.is_clear():
+            while self.dist() > self.SAFE_STOP_DIST:
+                time.sleep(.2)
+                self.status()
 
 def error():
     """records general, less specific error"""
