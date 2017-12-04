@@ -200,10 +200,6 @@ class Piggy(pigo.Pigo):
             time.sleep(.2)
             self.status()
 
-
-                print("\n power flux must stop \n")
-                ##
-
 def error():
     """records general, less specific error"""
     logging.error("ERROR")
