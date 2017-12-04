@@ -163,17 +163,19 @@ class Piggy(pigo.Pigo):
         difference = (right_now - self.start_time).seconds
         print ("It took you %d seconds to run this" % difference)
 
-        while True:
-            if self.is_clear():
-                self.cruise()
-            else:
-                self.switch_turn(5)
-                if not self.is_clear():
-                    self.switch_turn(9)
-                if not self.is_clear():
-                    self.encB(5)
-                    self.restore()
-
+        def cruise(self):
+            self.fwd()
+            while True:
+                self.servo(self.MIDPOINT)
+                if self.dist() < self.SAFE_STOP_DIST:
+                    break
+                self.servo(self.MIDPOINT + 10):
+                if self.dist() < self.SAFE_STOP_DIST:
+                    break
+                self.servo(self.MIDPOINT - 10):
+                if self.dist() < self.SAFE_STOP_DIST:
+                    break
+            self.stop()
 
 
                   #check right and go right if clear
