@@ -163,19 +163,18 @@ class Piggy(pigo.Pigo):
         difference = (right_now - self.start_time).seconds
         print ("It took you %d seconds to run this" % difference)
 
-        def cruise(self):
-            self.fwd()
-            while True:
-                self.servo(self.MIDPOINT)
-                if self.dist() < self.SAFE_STOP_DIST:
-                    break
-                self.servo(self.MIDPOINT + 10):
-                if self.dist() < self.SAFE_STOP_DIST:
-                    break
-                self.servo(self.MIDPOINT - 10):
-                if self.dist() < self.SAFE_STOP_DIST:
-                    break
-            self.stop()
+        while True:
+            if self.is_clear():
+                self.cruise()
+            else:
+                self.switch_turn(5)
+                if not self.is_clear():
+                    self.switch_turn(9)
+                    self.restore()
+                if not self.is_clear():
+                    self.encB(5)
+                    self.restore()
+
 
 
                   #check right and go right if clear
@@ -195,12 +194,13 @@ class Piggy(pigo.Pigo):
 
     def cruise(self):
         """ drive straight while path is clear """
+        self.is_clear()
         self.fwd()
         while self.dist() > self.SAFE_STOP_DIST:
             time.sleep(.2)
             self.status()
-            if self.volt() > 15:
-                self.stop()
+
+
                 print("\n power flux must stop \n")
                 ##
 
