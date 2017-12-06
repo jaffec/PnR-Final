@@ -164,16 +164,15 @@ class Piggy(pigo.Pigo):
         print ("It took you %d seconds to run this" % difference)
 
         while True:
+            if self.is_clear():
                 self.cruise()
-            else:
-                self.switch_turn(5)
-                if not self.is_clear():
-
-                    self.switch_turn(9)
-                    self.restore()
-                if not self.is_clear():
-                    self.encB(5)
-                    self.restore()
+            self.switch_turn(5)
+            if not self.is_clear():
+                self.switch_turn(9)
+                self.restore()
+            if not self.is_clear():
+                self.encB(5)
+                self.restore()
 
 
 
