@@ -164,7 +164,7 @@ class Piggy(pigo.Pigo):
         print ("It took you %d seconds to run this" % difference)
 
         while True:
-                self.cruise():
+                self.cruise()
             else:
                 self.switch_turn(5)
                 if not self.is_clear():
