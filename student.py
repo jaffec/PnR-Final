@@ -176,9 +176,6 @@ class Piggy(pigo.Pigo):
 
 
 
-                  #check right and go right if clear
-
-                    #look left 2 times and then go
     def smooth_turn(self):
         self.right_rot()
         start - datetime.datetime.utcnow()
@@ -193,10 +190,10 @@ class Piggy(pigo.Pigo):
 
     def cruise(self):
         """ drive straight while path is clear """
-        self.fwd()
         while self.dist() > self.SAFE_STOP_DIST:
             time.sleep(.2)
-            self.status()
+            self.fwd()
+        self.stop()
 
 def error():
     """records general, less specific error"""
